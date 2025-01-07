@@ -3,24 +3,28 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "BaseProjectile.h"
 #include "LightProjectile.generated.h"
 
+class UNiagaraComponent;
 UCLASS()
-class MINDGUARD_API ALightProjectile : public AActor
+class MINDGUARD_API ALightProjectile : public ABaseProjectile
 {
 	GENERATED_BODY()
 	
-public:	
-	// Sets default values for this actor's properties
+public:
+	// Constructor
 	ALightProjectile();
-
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Parameter", Meta = (ExposeOnSpawn = "true"))
+	TObjectPtr<USceneComponent> HomingTargetComponent;
+	
 protected:
-	// Called when the game starts or when spawned
+	// Niagara Component for visual effects
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Effects")
+	UNiagaraComponent* NiagaraEffect;
+	
+private:
+	
 	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 };
